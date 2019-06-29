@@ -1,99 +1,108 @@
 package co.grandcircus.piglatin;
 
 public class PigLatinMethod {
-	public static boolean isConsonant(String letter) {
-		boolean isConsonant;
-		if (letter.equalsIgnoreCase("a")) {
-			isConsonant = false;
-		} else if (letter.equalsIgnoreCase("e")) {
-			isConsonant = false;
-		} else if (letter.equalsIgnoreCase("i")) {
-			isConsonant = false;
-		} else if (letter.equalsIgnoreCase("o")) {
-			isConsonant = false;
-		} else if (letter.equalsIgnoreCase("u")) {
-			isConsonant = false;
-		} else {
-			isConsonant = true;
-		}
-
-		return isConsonant;
-
+	//METHODS 
+	public static String capitalize(String finalPhrase) {
+		String firstLetter = finalPhrase.substring(0, 1).toUpperCase();
+		String rest = finalPhrase.substring(1);
+		finalPhrase = firstLetter + rest;
+		return finalPhrase;
 	}
-
-	public static String translateToPigLatin(String userInput) {
-		
-		
-		String firstLetters = "";
-		String wordProgress = "";
-		String word;
+	public static String translatedPhrase(String[] words) {
+		String newString = "";
 		int i = 0;
-		firstLetters = userInput.substring(i, i + 1);
-		String nextLetter = userInput.substring(i, i + 1);
-		if (isConsonant(nextLetter)) {
-			do {
-				firstLetters = userInput.substring(i, i + 1);
-				i++;
-				nextLetter = userInput.substring(i, i + 1);
-				if (isConsonant(firstLetters) && isConsonant(nextLetter) != true) {
-					if (isConsonant(nextLetter)) {
-						wordProgress = firstLetters;
-						i++;
-					}
-				} else if (isConsonant(firstLetters) && isConsonant(nextLetter)) {
-					wordProgress = wordProgress + firstLetters;
-				}
-			} while (isConsonant(nextLetter) == true);
-			word = userInput.substring(i) + wordProgress + firstLetters + "ay";
-		} else {
-			word = userInput + "way";
+		String punctuation = "";
+		
+		while ( i < words.length) {
+			if( isPunctuation(words[i])) {
+				punctuation = words[i].substring(words[i].length() -1);
+				words[i] = words[i].substring(0, words[i].length() -1);
+			}else {
+				punctuation = "";
+			}
+			newString = newString + translatedWord(words[i]) + punctuation + " ";
+			
+
+			i++;
 		}
-		//System.out.println(word);
-		return word;
-	}
-
-	public static boolean isThereAnotherWord(String userInput) {
-		boolean anotherWord;
-		int i = userInput.indexOf(' ');
-		int locOfLetterAfterSpace = userInput.charAt(i + 1);
-		if (i != -1 && locOfLetterAfterSpace != -1) {
-			anotherWord = true;
-		} else {
-			anotherWord = false;
-		}
-
-		return anotherWord;
-
-	}
-
-	public static String whatIsNextWord(String userInput) {
-		String nextWord;
-
-		int i = userInput.indexOf(" ");
-		nextWord = userInput.substring(i + 1);
-		// System.out.println(nextWord);
-
-		return nextWord;
-	}
-
-	public static String seperateFirstWord(String userInput) {
-		int i = userInput.indexOf(" ");
-		String nextWord;
-		nextWord = userInput.substring(0, i);
-
-		return nextWord;
-
-	}
-
-	public static String capitalize(String newString) {
-
-		String firstLetter;
-		String rest;
-
-		newString = newString.toLowerCase();
-		firstLetter = newString.substring(0, 1).toUpperCase();
-		rest = newString.substring(1).toLowerCase();
-		newString = firstLetter + rest;
 		return newString;
+		
+	}
+	public static String translatedWord(String word) {
+		String newString = "";
+		
+		if(doTranslate(word)) {
+			newString = toPigLatin(word);
+		}else {
+			newString = word;
+		}
+		return newString;
+	}
+	public static boolean doTranslate(String word) {
+		boolean translate;
+		if (word.indexOf("@") == -1
+				&& word.indexOf("0") == -1
+				&& word.indexOf("1") == -1
+				&& word.indexOf("2") == -1
+				&& word.indexOf("3") == -1
+				&& word.indexOf("4") == -1
+				&& word.indexOf("5") == -1
+				&& word.indexOf("6") == -1
+				&& word.indexOf("7") == -1
+				&& word.indexOf("8") == -1
+				&& word.indexOf("9") == -1
+				&& word.indexOf(".com") == -1) {
+			translate = true;
+		}else {
+			translate = !true;
+		}
+		return translate;
+	}
+	public static String toPigLatin(String word) {
+		String firstLetters = "";
+		String rest = "";
+		//String word1 = word;
+		String translatedWord;
+		int i = 0;
+		
+		if (isConsonant(word.charAt(i))) {
+
+			while (i < word.length() && isConsonant(word.charAt(i))) {
+				firstLetters = firstLetters + word.substring(i, i + 1);
+				i++;
+			}
+			rest = word.substring(i);
+			translatedWord = rest + firstLetters + "ay";
+			
+			
+		} else {
+			translatedWord = word + "way";
+		}
+		return translatedWord;
+	}
+	public static boolean isConsonant(char letter) {
+		boolean consonant = true;
+		if (letter == 'a'
+				|| letter == 'e'
+				|| letter == 'i'
+				|| letter == 'o'
+				|| letter == 'u') {
+			consonant = !true;
+		}else {
+			consonant = true;
+		}
+		return consonant;
+	}
+	public static boolean isPunctuation(String userInput) {
+		char c = userInput.charAt(userInput.length() -1);
+		
+		return c == ','
+			|| c == '.'
+			|| c == '!'
+			|| c == '?'
+			|| c == ';'
+			|| c == ':'
+			;
+				 
 	}
 }
