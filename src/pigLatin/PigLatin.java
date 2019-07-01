@@ -15,5 +15,6 @@ public class PigLatin {
 		finalPhrase = PigLatinMethod.translatedPhrase(words);
 		finalPhrase = PigLatinMethod.capitalize(finalPhrase);
 		System.out.println(finalPhrase);
+		scnr.close();
 	}
 }
