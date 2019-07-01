@@ -1,4 +1,6 @@
-package co.grandcircus.piglatin;
+package igPayatinLay;
+
+
 
 public class PigLatinMethod {
 	//METHODS 
@@ -102,7 +104,7 @@ public class PigLatinMethod {
 			|| c == '?'
 			|| c == ';'
 			|| c == ':'
-			;
-				 
+				;
+					 
 	}
 }
