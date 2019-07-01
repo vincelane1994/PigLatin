@@ -1,8 +1,8 @@
-package igPayatinLay;
+package pigLatin;
 
 import java.util.Scanner;
 
-public class igpay {
+public class PigLatin {
 	public static void main(String[] args) {
 		Scanner scnr = new Scanner(System.in);
 		System.out.println("Enter a phrase: ");
